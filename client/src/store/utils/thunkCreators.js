@@ -105,11 +105,10 @@ export const postMessage = (body) => {
       }
 
       sendMessage(data, body);
-
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 };
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
