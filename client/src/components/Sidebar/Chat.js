@@ -14,9 +14,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     "&:hover": {
-      cursor: "grab"
-    }
-  }
+      cursor: "grab",
+    },
+  },
+  badge: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#ffffff",
+    backgroundColor: "#3A8DFF",
+    paddingRight: "5px",
+    paddingLeft: "5px",
+    minWidth: 20,
+    height: 20,
+    borderRadius: "20px",
+  },
 }));
 
 const Chat = (props) => {
@@ -37,6 +48,9 @@ const Chat = (props) => {
         sidebar={true}
       />
       <ChatContent conversation={conversation} />
+      {conversation.numUnread > 0 && (
+        <div className={classes.badge}> {conversation.numUnread} </div>
+      )}
     </Box>
   );
 };
@@ -45,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
-    }
+    },
   };
 };
 
