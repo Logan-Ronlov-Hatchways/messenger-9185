@@ -72,12 +72,12 @@ router.get("/", async (req, res, next) => {
       convoJSON.numUnread = 0;
       for (let i = 0; i < convoJSON.messages.length; i++) {
         if (
-          convoJSON.lastReadTime !== undefined &&
+          convoJSON.lastReadTime &&
           convoJSON.messages[i].createdAt <= convoJSON.lastReadTime
         ) {
           break;
         }
-        if (userId != convoJSON.messages[i].senderId) {
+        if (userId !== convoJSON.messages[i].senderId) {
           convoJSON.numUnread++;
         }
       }

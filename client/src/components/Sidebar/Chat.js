@@ -55,7 +55,7 @@ const Chat = (props) => {
       />
       <ChatContent conversation={conversation} />
       {conversation.numUnread > 0 && (
-        <div className={classes.badge}> {unreadDisplay} </div>
+        <Box className={classes.badge}> {unreadDisplay} </Box>
       )}
     </Box>
   );
