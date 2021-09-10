@@ -5,8 +5,12 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  setUnread,
+  addToUnread,
 } from "../conversations";
+
 import { gotUser, setFetchingStatus } from "../user";
+import { setActiveChat } from "../activeConversation";
 
 axios.interceptors.request.use(async function (config) {
   const token = await localStorage.getItem("messenger-token");
@@ -89,6 +93,39 @@ const sendMessage = (data, body) => {
     recipientId: body.recipientId,
     sender: data.sender,
   });
+};
+
+export const updateActiveChat = (username, convoId) => {
+  return async (dispatch) => {
+    dispatch(setActiveChat(username));
+
+    try {
+      await axios.post("/api/markUnread", { conversationId: convoId });
+      dispatch(setUnread(username, 0));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const receiveNewMessage = (message, sender) => {
+  return async (dispatch, getState) => {
+    dispatch(setNewMessage(message, sender));
+
+    const { activeConversation, conversations } = getState();
+
+    // if we're not looking at the chat for the message we just got,
+    // add 1 to its unread count. otherwise tell the server that we read it
+    conversations.forEach((convo) => {
+      if (convo.id === message.conversationId) {
+        if (convo.otherUser.username == activeConversation) {
+          axios.post("/api/markUnread", { conversationId: convo.id });
+        } else {
+          dispatch(addToUnread(convo.otherUser.username, 1));
+        }
+      }
+    });
+  };
 };
 
 // message format to send: {recipientId, text, conversationId}
