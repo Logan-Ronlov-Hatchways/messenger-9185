@@ -42,6 +42,9 @@ const Chat = (props) => {
     );
   };
 
+  const unreadDisplay =
+    conversation.numUnread < 100 ? conversation.numUnread : "99+";
+
   return (
     <Box onClick={() => handleClick(conversation)} className={classes.root}>
       <BadgeAvatar
@@ -52,7 +55,7 @@ const Chat = (props) => {
       />
       <ChatContent conversation={conversation} />
       {conversation.numUnread > 0 && (
-        <div className={classes.badge}> {conversation.numUnread} </div>
+        <div className={classes.badge}> {unreadDisplay} </div>
       )}
     </Box>
   );
