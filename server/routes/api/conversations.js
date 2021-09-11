@@ -55,12 +55,16 @@ router.get("/", async (req, res, next) => {
       if (convoJSON.user1) {
         convoJSON.otherUser = convoJSON.user1;
         convoJSON.lastReadTime = convoJSON.user2Unread;
+        convoJSON.lastReadTimeOther = convoJSON.user1Unread;
         delete convoJSON.user1;
       } else if (convoJSON.user2) {
         convoJSON.otherUser = convoJSON.user2;
         convoJSON.lastReadTime = convoJSON.user1Unread;
+        convoJSON.lastReadTimeOther = convoJSON.user2Unread;
         delete convoJSON.user2;
       }
+      delete convoJSON.user2Unread;
+      delete convoJSON.user1Unread;
 
       // set property for online status of the other user
       if (onlineUsers.includes(convoJSON.otherUser.id)) {
@@ -69,6 +73,7 @@ router.get("/", async (req, res, next) => {
         convoJSON.otherUser.online = false;
       }
 
+      //count number of unread messages
       convoJSON.numUnread = 0;
       for (let i = 0; i < convoJSON.messages.length; i++) {
         if (
@@ -79,6 +84,19 @@ router.get("/", async (req, res, next) => {
         }
         if (userId !== convoJSON.messages[i].senderId) {
           convoJSON.numUnread++;
+        }
+      }
+
+      //find last message of user that they read
+      for (let i = convoJSON.messages.length - 1; i >= 0; i--) {
+        if (
+          convoJSON.lastReadTimeOther &&
+          convoJSON.messages[i].createdAt > convoJSON.lastReadTimeOther
+        ) {
+          break;
+        }
+        if (userId === convoJSON.messages[i].senderId) {
+          convoJSON.otherUserLastRead = convoJSON.messages[i].id;
         }
       }
 

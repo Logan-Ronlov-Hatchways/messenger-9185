@@ -119,7 +119,11 @@ export const receiveNewMessage = (message, sender) => {
     conversations.forEach((convo) => {
       if (convo.id === message.conversationId) {
         if (convo.otherUser.username == activeConversation) {
-          axios.post("/api/markUnread", { conversationId: convo.id });
+          try {
+            axios.post("/api/markUnread", { conversationId: convo.id });
+          } catch (error) {
+            console.error(error);
+          }
         } else {
           dispatch(addToUnread(convo.otherUser.username, 1));
         }
