@@ -90,7 +90,7 @@ router.get("/", async (req, res, next) => {
       //find last message of user that they read
       for (let i = convoJSON.messages.length - 1; i >= 0; i--) {
         if (
-          convoJSON.lastReadTimeOther &&
+          !convoJSON.lastReadTimeOther ||
           convoJSON.messages[i].createdAt > convoJSON.lastReadTimeOther
         ) {
           break;

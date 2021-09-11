@@ -11,6 +11,10 @@ router.post("/", async (req, res, next) => {
 
     let conversation = await Conversation.findByPk(conversationId);
 
+    if (!conversation) {
+      throw "conversation not in database";
+    }
+
     if (conversation.user1Id == req.user.id) {
       conversation.user1Unread = Sequelize.fn("NOW");
     } else if (conversation.user2Id == req.user.id) {

@@ -96,11 +96,14 @@ const sendMessage = (data, body) => {
 };
 
 export const updateActiveChat = (username, convoId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(setActiveChat(username));
+
+    const { user } = getState();
 
     try {
       await axios.post("/api/markUnread", { conversationId: convoId });
+      await socket.emit("mark-read", { convoId, username: user.username });
       dispatch(setUnread(username, 0));
     } catch (error) {
       console.error(error);
@@ -112,7 +115,7 @@ export const receiveNewMessage = (message, sender) => {
   return async (dispatch, getState) => {
     dispatch(setNewMessage(message, sender));
 
-    const { activeConversation, conversations } = getState();
+    const { user, activeConversation, conversations } = getState();
 
     // if we're not looking at the chat for the message we just got,
     // add 1 to its unread count. otherwise tell the server that we read it
@@ -121,6 +124,10 @@ export const receiveNewMessage = (message, sender) => {
         if (convo.otherUser.username == activeConversation) {
           try {
             axios.post("/api/markUnread", { conversationId: convo.id });
+            socket.emit("mark-read", {
+              convoId: convo.id,
+              username: user.username,
+            });
           } catch (error) {
             console.error(error);
           }
