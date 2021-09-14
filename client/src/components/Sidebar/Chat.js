@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
-import { setActiveChat } from "../../store/activeConversation";
+import { updateActiveChat } from "../../store/utils/thunkCreators";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -14,9 +14,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     "&:hover": {
-      cursor: "grab"
-    }
-  }
+      cursor: "grab",
+    },
+  },
+  badge: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#ffffff",
+    backgroundColor: "#3A8DFF",
+    paddingRight: "5px",
+    paddingLeft: "5px",
+    minWidth: 20,
+    height: 20,
+    borderRadius: "20px",
+  },
 }));
 
 const Chat = (props) => {
@@ -25,8 +36,14 @@ const Chat = (props) => {
   const { otherUser } = conversation;
 
   const handleClick = async (conversation) => {
-    await props.setActiveChat(conversation.otherUser.username);
+    await props.updateActiveChat(
+      conversation.otherUser.username,
+      conversation.id
+    );
   };
+
+  const unreadDisplay =
+    conversation.numUnread < 100 ? conversation.numUnread : "99+";
 
   return (
     <Box onClick={() => handleClick(conversation)} className={classes.root}>
@@ -37,15 +54,18 @@ const Chat = (props) => {
         sidebar={true}
       />
       <ChatContent conversation={conversation} />
+      {conversation.numUnread > 0 && (
+        <Box className={classes.badge}> {unreadDisplay} </Box>
+      )}
     </Box>
   );
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setActiveChat: (id) => {
-      dispatch(setActiveChat(id));
-    }
+    updateActiveChat: (name, convoId) => {
+      dispatch(updateActiveChat(name, convoId));
+    },
   };
 };
 
