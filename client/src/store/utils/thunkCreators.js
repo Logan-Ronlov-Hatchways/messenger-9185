@@ -102,7 +102,7 @@ export const updateActiveChat = (username, convoId) => {
     const { user } = getState();
 
     try {
-      await axios.put("/api/markUnread", { conversationId: convoId });
+      await axios.put("/api/markRead", { conversationId: convoId });
       await socket.emit("mark-read", { convoId, username: user.username });
       dispatch(setUnread(username, 0));
     } catch (error) {
@@ -123,7 +123,7 @@ export const receiveNewMessage = (message, sender) => {
       if (convo.id === message.conversationId) {
         if (convo.otherUser.username === activeConversation) {
           try {
-            axios.put("/api/markUnread", { conversationId: convo.id });
+            axios.put("/api/markRead", { conversationId: convo.id });
             socket.emit("mark-read", {
               convoId: convo.id,
               username: user.username,
