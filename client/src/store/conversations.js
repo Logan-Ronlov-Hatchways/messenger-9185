@@ -85,10 +85,10 @@ export const addToUnread = (name, numUnread) => {
   };
 };
 
-export const setOtherRead = (convoId, userId) => {
+export const setOtherRead = (convoId, username) => {
   return {
     type: SET_OTHER_READ,
-    payload: { convoId, userId },
+    payload: { convoId, username },
   };
 };
 
@@ -128,7 +128,7 @@ const reducer = (state = [], action) => {
       return setOtherReadInStore(
         state,
         action.payload.convoId,
-        action.payload.userId
+        action.payload.username
       );
     }
     default:
