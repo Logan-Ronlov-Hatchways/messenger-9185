@@ -20,10 +20,8 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    //backgroundColor: "orange",
   },
   otherPageBox: {
-    //backgroundColor: "lightgreen",
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
