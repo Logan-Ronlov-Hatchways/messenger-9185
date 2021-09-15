@@ -11,8 +11,40 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
+import { theme } from "./themes/theme";
+import { makeStyles } from "@material-ui/core/styles";
+import LoginSidebar from "./LoginSidebar";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    //backgroundColor: "orange",
+  },
+  otherPageBox: {
+    //backgroundColor: "lightgreen",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  otherPageButton: {
+    color: theme.palette.primary.main,
+    backgroundColor: "white",
+    height: 55,
+  },
+  loginButton: {
+    height: 55,
+    width: 150,
+  },
+  formBox: {
+    alignSelf: "center",
+    width: "300px",
+  },
+}));
 
 const Login = (props) => {
+  const classes = useStyles();
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -37,73 +69,103 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Button onClick={() => history.push("/login")}>Login</Button>
-        </Grid>
-        <form onSubmit={handleRegister}>
-          <Grid>
-            <Grid>
+    <LoginSidebar>
+      <Box m={1} className={classes.root}>
+        <Box className={classes.otherPageBox}>
+          <Box mx={2}>
+            <Typography variant="body2" color="secondary">
+              Already have an account?
+            </Typography>
+          </Box>
+          <Button
+            className={classes.otherPageButton}
+            size="large"
+            variant="contained"
+            onClick={() => history.push("/login")}
+          >
+            Login
+          </Button>
+        </Box>
+        <Box className={classes.formBox}>
+          <form onSubmit={handleRegister}>
+            <Box display="flex" flexDirection="column" justifyContent="center">
+              <Box my={4} mx={2}>
+                <Typography variant="h5">
+                  <Box fontWeight="fontWeightBold">Create an account.</Box>
+                </Typography>
+              </Box>
               <FormControl>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                  required
-                />
+                <Box m={2}>
+                  <TextField
+                    fullWidth
+                    aria-label="username"
+                    label="Username"
+                    name="username"
+                    type="text"
+                    required
+                  />
+                </Box>
               </FormControl>
-            </Grid>
-            <Grid>
               <FormControl>
-                <TextField
-                  label="E-mail address"
-                  aria-label="e-mail address"
-                  type="email"
-                  name="email"
-                  required
-                />
+                <Box m={2}>
+                  <TextField
+                    fullWidth
+                    label="E-mail address"
+                    aria-label="e-mail address"
+                    type="email"
+                    name="email"
+                    required
+                  />
+                </Box>
               </FormControl>
-            </Grid>
-            <Grid>
               <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  aria-label="password"
-                  label="Password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="password"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
+                <Box m={2}>
+                  <TextField
+                    fullWidth
+                    aria-label="password"
+                    label="Password"
+                    type="password"
+                    inputProps={{ minLength: 6 }}
+                    name="password"
+                    required
+                  />
+                  <FormHelperText>
+                    {formErrorMessage.confirmPassword}
+                  </FormHelperText>
+                </Box>
               </FormControl>
-            </Grid>
-            <Grid>
               <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  label="Confirm Password"
-                  aria-label="confirm password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="confirmPassword"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
+                <Box m={2}>
+                  <TextField
+                    fullWidth
+                    label="Confirm Password"
+                    aria-label="confirm password"
+                    type="password"
+                    inputProps={{ minLength: 6 }}
+                    name="confirmPassword"
+                    required
+                  />
+                  <FormHelperText>
+                    {formErrorMessage.confirmPassword}
+                  </FormHelperText>
+                </Box>
               </FormControl>
-            </Grid>
-            <Button type="submit" variant="contained" size="large">
-              Create
-            </Button>
-          </Grid>
-        </form>
+              <Box m={4} alignSelf="center" alignItems="center" display="flex">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  className={classes.loginButton}
+                >
+                  Create
+                </Button>
+              </Box>
+            </Box>
+          </form>
+        </Box>
       </Box>
-    </Grid>
+    </LoginSidebar>
   );
 };
 
