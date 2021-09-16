@@ -2,13 +2,10 @@ const { Op, Sequelize } = require("sequelize");
 const db = require("../db");
 const Message = require("./message");
 
-const Conversation = db.define("conversation", {
-  user1Unread: Sequelize.DATE,
-  user2Unread: Sequelize.DATE,
-});
+const Conversation = db.define("conversation", {});
 
 // find conversation given two user Ids
-
+//TODO update this function to work with the model changes.
 Conversation.findConversation = async function (user1Id, user2Id) {
   const conversation = await Conversation.findOne({
     where: {
