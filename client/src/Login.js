@@ -12,22 +12,13 @@ import { login } from "./store/utils/thunkCreators";
 import { theme } from "./themes/theme";
 import { makeStyles } from "@material-ui/core/styles";
 import LoginSidebar from "./LoginSidebar";
+import PageSwitchButton from "./components/PageSwitchButton";
 
 const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-  },
-  otherPageBox: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  otherPageButton: {
-    color: theme.palette.primary.main,
-    backgroundColor: "white",
-    height: 55,
   },
   loginButton: {
     height: 55,
@@ -58,22 +49,12 @@ const Login = (props) => {
 
   return (
     <LoginSidebar>
-      <Box m={1} className={classes.root}>
-        <Box className={classes.otherPageBox}>
-          <Box mx={2}>
-            <Typography variant="body2" color="secondary">
-              {"Don't have an account?"}
-            </Typography>
-          </Box>
-          <Button
-            className={classes.otherPageButton}
-            size="large"
-            variant="contained"
-            onClick={() => history.push("/register")}
-          >
-            Create account
-          </Button>
-        </Box>
+      <Box mx={4} my={1} className={classes.root}>
+        <PageSwitchButton
+          text="Don't have an account?"
+          buttonText="Create account"
+          onClick={() => history.push("/register")}
+        />
         <Box className={classes.formBox}>
           <form onSubmit={handleLogin}>
             <Box display="flex" flexDirection="column" justifyContent="center">

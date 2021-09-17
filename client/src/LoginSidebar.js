@@ -39,7 +39,7 @@ const LoginSidebar = (props) => {
           <Box className={classes.colorOverlay}>
             <Box className={classes.bubble}>
               <Icon>
-                <img src={"bubble.svg"} />
+                <img src={"bubble.svg"} alt="Chat bubble logo" />
               </Icon>
             </Box>
             <Box className={classes.text}>
