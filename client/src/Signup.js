@@ -58,22 +58,22 @@ const Login = (props) => {
 
   return (
     <LoginSidebar>
-      <Box mx={4} my={1} className={classes.root}>
+      <Box mx={4} my={2} className={classes.root}>
         <PageSwitchButton
           text="Already have an account?"
           buttonText="Login"
           onClick={() => history.push("/login")}
         />
-        <Box className={classes.formBox}>
+        <Box my={4} className={classes.formBox}>
           <form onSubmit={handleRegister}>
-            <Box display="flex" flexDirection="column" justifyContent="center">
-              <Box my={4} mx={2}>
+            <Grid container spacing={3} justifyContent="center">
+              <Grid item xs={12}>
                 <Typography variant="h5">
                   <Box fontWeight="fontWeightBold">Create an account.</Box>
                 </Typography>
-              </Box>
-              <FormControl>
-                <Box m={2}>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
                   <TextField
                     fullWidth
                     aria-label="username"
@@ -82,10 +82,10 @@ const Login = (props) => {
                     type="text"
                     required
                   />
-                </Box>
-              </FormControl>
-              <FormControl>
-                <Box m={2}>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
                   <TextField
                     fullWidth
                     label="E-mail address"
@@ -94,10 +94,13 @@ const Login = (props) => {
                     name="email"
                     required
                   />
-                </Box>
-              </FormControl>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <Box m={2}>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl
+                  fullWidth
+                  error={!!formErrorMessage.confirmPassword}
+                >
                   <TextField
                     fullWidth
                     aria-label="password"
@@ -110,10 +113,13 @@ const Login = (props) => {
                   <FormHelperText>
                     {formErrorMessage.confirmPassword}
                   </FormHelperText>
-                </Box>
-              </FormControl>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <Box m={2}>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl
+                  fullWidth
+                  error={!!formErrorMessage.confirmPassword}
+                >
                   <TextField
                     fullWidth
                     label="Confirm Password"
@@ -126,9 +132,9 @@ const Login = (props) => {
                   <FormHelperText>
                     {formErrorMessage.confirmPassword}
                   </FormHelperText>
-                </Box>
-              </FormControl>
-              <Box m={4} alignSelf="center" alignItems="center" display="flex">
+                </FormControl>
+              </Grid>
+              <Grid item>
                 <Button
                   color="primary"
                   type="submit"
@@ -138,8 +144,8 @@ const Login = (props) => {
                 >
                   Create
                 </Button>
-              </Box>
-            </Box>
+              </Grid>
+            </Grid>
           </form>
         </Box>
       </Box>

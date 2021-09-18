@@ -3,6 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Box,
+  Grid,
   Typography,
   Button,
   FormControl,
@@ -49,22 +50,22 @@ const Login = (props) => {
 
   return (
     <LoginSidebar>
-      <Box mx={4} my={1} className={classes.root}>
+      <Box mx={4} my={2} className={classes.root}>
         <PageSwitchButton
           text="Don't have an account?"
           buttonText="Create account"
           onClick={() => history.push("/register")}
         />
-        <Box className={classes.formBox}>
+        <Box my={4} className={classes.formBox}>
           <form onSubmit={handleLogin}>
-            <Box display="flex" flexDirection="column" justifyContent="center">
-              <Box my={4} mx={2}>
+            <Grid container spacing={4} justifyContent="center">
+              <Grid item xs={12}>
                 <Typography variant="h5">
                   <Box fontWeight="fontWeightBold">Welcome Back!</Box>
                 </Typography>
-              </Box>
-              <FormControl required>
-                <Box m={2}>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth required>
                   <TextField
                     fullWidth
                     aria-label="username"
@@ -72,10 +73,10 @@ const Login = (props) => {
                     name="username"
                     type="text"
                   />
-                </Box>
-              </FormControl>
-              <FormControl required>
-                <Box m={2}>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth required>
                   <TextField
                     fullWidth
                     label="password"
@@ -83,9 +84,9 @@ const Login = (props) => {
                     type="password"
                     name="password"
                   />
-                </Box>
-              </FormControl>
-              <Box m={4} alignSelf="center" alignItems="center" display="flex">
+                </FormControl>
+              </Grid>
+              <Grid item>
                 <Button
                   color="primary"
                   type="submit"
@@ -95,8 +96,8 @@ const Login = (props) => {
                 >
                   Login
                 </Button>
-              </Box>
-            </Box>
+              </Grid>
+            </Grid>
           </form>
         </Box>
       </Box>
