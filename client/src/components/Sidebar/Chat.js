@@ -20,8 +20,6 @@ const useStyles = makeStyles((theme) => ({
   badge: {
     fontWeight: "bold",
     textAlign: "center",
-    color: "#ffffff",
-    backgroundColor: "#3A8DFF",
     paddingRight: "5px",
     paddingLeft: "5px",
     minWidth: 20,
@@ -55,7 +53,9 @@ const Chat = (props) => {
       />
       <ChatContent conversation={conversation} />
       {conversation.numUnread > 0 && (
-        <Box className={classes.badge}> {unreadDisplay} </Box>
+        <Box bgcolor="primary.main" color="white" className={classes.badge}>
+          {unreadDisplay}
+        </Box>
       )}
     </Box>
   );
